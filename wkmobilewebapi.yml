@@ -1,0 +1,182 @@
+spring:
+  application:
+    name: wkmobilewebapi
+  datasource:
+      filters: stat
+      maxActive: 300
+      initialSize: 20
+      maxWait: 6000
+      minIdle: 20
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 30000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+multipart:
+  maxFileSize: 50Mb
+  maxRequestSize: 50Mb
+server.port: 30148
+mybatis:
+  mapperLocations: classpath:/mapper/*.xml
+pagehelper:
+  pagehelper.autoDialect=true
+  pagehelper.closeConn=true
+logging:
+  file: log.log
+  level: debug
+---
+spring:
+  profiles: test
+  dubbo:
+    scan: com.wangku.mobile.webapi
+    application:
+      name: wkmobilewebapi
+    registry:
+      address: zookeeper://172.16.0.34:2181
+    service:
+      timeout: 100000
+  redis:
+    host: 172.16.0.33
+#    database: 1
+#    host: 172.16.0.200
+    port: 6379
+    timeout: 60000
+    pool:
+      max-idle: 20
+      min-idle: 0
+      max-active: 20
+      max-wait: -1
+  datasource:
+    url: jdbc:mysql://172.16.0.34:3306/wk_trade_shard1?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    username: trade
+    password: '@wk*trade*shard'
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+custom:
+  datasource:
+    names:
+      mobileWrite,mobileRead
+    mobileWrite:
+      url: jdbc:mysql://172.16.0.34:3306/wk_msite_shard1?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true
+      username: msite
+      password: 'ptoQut8_69O4'
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+    mobileRead:
+      url: jdbc:mysql://172.16.0.34:3306/wk_msite_shard1?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true
+      username: msite
+      password: 'ptoQut8_69O4'
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+config:
+  ipStr: http://m.99114.cn
+  casServerUrlPrefix: http://checkin.99114.cn
+  casServerLoginUrlPrefix: http://checkin.99114.cn/login
+  env: test
+  infoDubboUrl: http://192.168.6.25:84/news
+  dealBusinessDomain: http://deal-business.99114.cn
+  dealDomain: http://deal.99114.cn
+  redisLoginLife: 20
+  messageSender: http://message.99114.com
+  alipay_m_forthwith_notify_url: http://wkmobile-api.99114.cn/tradeOrders/front/alipayNotifyUrl
+  alipay_m_forthwith_return_url: http://membercenterha.99114.cn/alipayreturnurl
+  alpay_m_notify_url: http://m.99114.cn/orders/alipayAsyncResult.action
+  alpay_m_return_url: http://m.99114.cn/orders/alipaySyncResult.action
+  zj_m_pay_url: http://m.99114.cn/order/back
+  zj_m_pay_url1312: http://m.99114.cn/order/back1312
+  wkmobile_api_url: http://wkmobile-api.99114.cn
+  sitemanage: http://sitemanage.99114.cn
+  wkDomain: http://www.99114.cn
+  shopDomain: http://shop.99114.cn
+  wkWebDomain: http://webmobile.99114.cn
+  upload_pic_url: http://uploads.99114.cn/imageStore/checkUpload
+  m_domain_url: http://membercenterha.99114.cn
+  redirect_solr_purchase_url: http://192.168.6.25:82/purchase/
+  direct_call_appid: 9f718398409645a79c603d3d9551a700
+  direct_call_url: "http://sandbox.ytx.net"
+  direct_call_num: "01053189990"
+  illegalWord: http://172.16.0.207:30160
+  appManage: http://app-manage.99114.cn
+  cyt_server_alipay_notify_url : http://wkmobile-api.99114.cn/cyt/alipayNotifyUrl
+  cyt_server_alipay_return_url : http://membercenterha.99114.cn/memberPay
+  cyt_pay_success_sms_mobile : 17600206375
+  tgt_server_alipay_notify_url : http://wkmobile-api.99114.cn/tgt/pay/alipayNotifyUrl
+  tgt_server_alipay_return_url : http://membercenterha.99114.cn/tgtmemberPay?tgtPayType=2
+---
+
+spring:
+  profiles: online
+  dubbo:
+    scan: com.wangku.mobile.webapi
+    application:
+      name: wkmobilewebapi
+    registry:
+      address: zookeeper://192.168.6.24:2181?backup=192.168.6.15:2181
+    service:
+      timeout: 100000
+  redis:
+    host: 192.168.6.10
+    port: 11222
+    timeout: 60000
+    pool:
+      max-idle: 20
+      min-idle: 0
+      max-active: 20
+      max-wait: -1
+  datasource:
+    url: jdbc:mysql://192.168.6.146:3306/wk_trade_shard1?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    username: trade
+    password: '@wk*trade*shard'
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+custom:
+  datasource:
+    names:
+      mobileWrite,mobileRead
+    mobileWrite:
+      url: jdbc:mysql://192.168.6.195:3306/wk_msite_shard1?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true
+      username: msite
+      password: 'm5rAraVn_upj3ed'
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+    mobileRead:
+      url: jdbc:mysql://192.168.6.196:3306/wk_msite_shard1?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true
+      username: msite
+      password: 'm5rAraVn_upj3ed'
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+config:
+  ipStr: http://m.99114.com
+  casServerUrlPrefix: http://checkin.99114.com
+  casServerLoginUrlPrefix: http://checkin.99114.com/login
+  env: online
+  infoDubboUrl: http://192.168.6.25:84/news
+  dealBusinessDomain: http://deal-business.99114.com
+  dealDomain: http://deal.99114.com
+  redisLoginLife: 20
+  messageSender: http://message.99114.com
+  alipay_m_forthwith_notify_url: http://wkmobile-api.99114.com/tradeOrders/front/alipayNotifyUrl
+  alipay_m_forthwith_return_url: http://membercenterha.99114.com/alipayReturnUrl
+  alpay_m_notify_url: http://m.99114.com/orders/alipayAsyncResult.action
+  alpay_m_return_url: http://m.99114.com/orders/alipaySyncResult.action
+  zj_m_pay_url: http://m.99114.com/order/back
+  zj_m_pay_url1312: http://m.99114.com/order/back1312
+  wkmobile_api_url: http://wkmobile-api.99114.com
+  sitemanage: http://sitemanage.99114.com
+  wkDomain: http://www.99114.com
+  shopDomain: http://shop.99114.com
+  wkWebDomain: http://webmobile.99114.com
+  upload_pic_url: http://uploads.99114.com/imageStore/checkUpload
+  m_domain_url: http://membercenterha.99114.com
+  redirect_solr_purchase_url: http://192.168.6.25:82/purchase/
+  direct_call_appid: 84629337d8134b6bb06284cbf6db0ca7
+  direct_call_url: "http://api.ytx.net"
+  direct_call_num: "01053189990"
+  illegalWord: http://192.168.6.25:30160
+  appManage: http://app-manage.99114.com
+  cyt_server_alipay_notify_url : http://wkmobile-api.99114.com/cyt/alipayNotifyUrl
+  cyt_server_alipay_return_url : http://membercenterha.99114.com/memberPay
+  cyt_pay_success_sms_mobile : 18612449737
+  tgt_server_alipay_notify_url : http://wkmobile-api.99114.com/tgt/pay/alipayNotifyUrl
+  tgt_server_alipay_return_url : http://membercenterha.99114.com/tgtmemberPay?tgtPayType=2
