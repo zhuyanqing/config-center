@@ -1,0 +1,13 @@
+server:
+  port: 8001
+
+eureka:
+  instance:
+    hostname: localhost # eureka 服务端实例名称
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7002/eureka  # 设置与Eureka Server 交互的地址查询服务和注册服务的地址
+
+spring:
+  application:
+    name: eureka-service
